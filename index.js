@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import adminRouter from "./routers/AdminRouter.js";
+import adminRouter from "./routers/adminRouter.js";
 import userRouter from "./routers/userRouter.js";
 import {connectDB} from "./config/db.js";
 
