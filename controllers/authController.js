@@ -44,7 +44,7 @@ export const signInUser = async (req, res) => {
 
     const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "15d" });
 
-    res.cookie("userToken", token, { httpOnly: false, secure: process.env.NODE_ENV === "production", sameSite: "strict" });
+    res.cookie("userToken", token, { httpOnly: false, secure: process.env.NODE_ENV === "production", sameSite: "none" });
 
     // Send success response with user details and token
     res.status(200).json({

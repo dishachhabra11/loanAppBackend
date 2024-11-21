@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
-export const adminAuthMiddleware = (req, res, next) => {
+import userModel from "../models/userModel.js";
+export const adminAuthMiddleware = async (req, res, next) => {
   try {
     const token = req.cookies.adminToken;
     if (!token) {
@@ -9,14 +10,16 @@ export const adminAuthMiddleware = (req, res, next) => {
     if (decoded.role !== "admin") {
       return res.status(403).json({ error: "Forbidden, Entry denied" });
     }
+    const user = await userModel.findOne({ email: decoded.email });
     console.log("Admin is authenticated");
+    req.user = user;
     next();
   } catch (error) {
     return res.status(401).json({ error: error.message });
   }
 };
 
-export const userAuthMiddleware = (req, res, next) => {
+export const userAuthMiddleware = async (req, res, next) => {
   try {
     const token = req.cookies.userToken;
     if (!token) {
@@ -26,7 +29,9 @@ export const userAuthMiddleware = (req, res, next) => {
     if (decoded.role !== "user") {
       return res.status(403).json({ error: "Forbidden, Entry denied" });
     }
+    const user = await userModel.findOne({ email: decoded.email });
     console.log("User is authenticated");
+    req.user = user;
     next();
   } catch (error) {
     return res.status(401).json({ error: error.message });

@@ -8,7 +8,8 @@ export const createLoan = async (req, res) => {
     if (!loanTerm || !loanAmount) {
       return res.status(400).json({ error: "Loan term and amount are required" });
     }
-    const userId = req.userId || "673d8fafe1b94e8eeaa0b93d";
+    
+    const userId = req.user._id || "673d8fafe1b94e8eeaa0b93d";
     const newLoan = new Loan({
       user: userId,
       loanTerm,
@@ -55,7 +56,8 @@ export const createLoan = async (req, res) => {
 
 export const getUserLoans = async (req, res) => {
   try {
-    const userId = req.userId || "673d8fafe1b94e8eeaa0b93d";
+    console.log("user is",String(req.user._id));
+    const userId = req.user._id ;
 
     const loans = await Loan.find({ user: userId }).populate("payments").populate("user");
 
