@@ -29,8 +29,9 @@ export const userAuthMiddleware = async (req, res, next) => {
     if (decoded.role !== "user") {
       return res.status(403).json({ error: "Forbidden, Entry denied" });
     }
-    const user = await userModel.findOne({ email: decoded.email });
-    console.log("User is authenticated");
+    console.log("decoded",decoded);
+    const user = await userModel.findById(decoded.userId);
+    console.log("User is authenticated",user);
     req.user = user;
     next();
   } catch (error) {

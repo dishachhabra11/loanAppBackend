@@ -56,7 +56,7 @@ export const createLoan = async (req, res) => {
 
 export const getUserLoans = async (req, res) => {
   try {
-    console.log("user is",String(req.user._id));
+    console.log("user is",String(req.user));
     const userId = req.user._id ;
 
     const loans = await Loan.find({ user: userId }).populate("payments").populate("user");
