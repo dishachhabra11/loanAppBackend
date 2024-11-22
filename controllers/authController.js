@@ -18,7 +18,7 @@ export const signupUser = async (req, res) => {
     user.save();
 
     res.cookie("userToken", token, {
-      httpOnly: true,
+      httpOnly: false,
       sameSite: "None",
       secure: process.env.NODE_ENV === "production", // Required for SameSite=None; works only over HTTPS
       maxAge: 15 * 24 * 60 * 60 * 1000, // Cookie expiration time (15 days)
@@ -52,7 +52,7 @@ export const signInUser = async (req, res) => {
     const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "15d" });
 
     res.cookie("userToken", token, {
-      httpOnly: true, // Prevent access via JavaScript
+      httpOnly: false, // Prevent access via JavaScript
       sameSite: "None", // Allow cross-origin requests
       secure: true, // Required for SameSite=None; works only over HTTPS
       maxAge: 15 * 24 * 60 * 60 * 1000, // Cookie expiration time (15 days)
