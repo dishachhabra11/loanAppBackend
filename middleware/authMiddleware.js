@@ -22,6 +22,7 @@ export const adminAuthMiddleware = async (req, res, next) => {
 export const userAuthMiddleware = async (req, res, next) => {
   try {
     const token = req.cookies.userToken;
+    
     if (!token) {
       return res.status(401).json({ error: "Unauthorized or no cookie present" });
     }
@@ -33,6 +34,7 @@ export const userAuthMiddleware = async (req, res, next) => {
     const user = await userModel.findById(decoded.userId);
     console.log("User is authenticated",user);
     req.user = user;
+    console.log(user);
     next();
   } catch (error) {
     return res.status(401).json({ error: error.message });

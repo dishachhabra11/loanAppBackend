@@ -54,7 +54,7 @@ export const signInUser = async (req, res) => {
     res.cookie("userToken", token, {
       httpOnly: false, // Prevent access via JavaScript
       sameSite: "None", // Allow cross-origin requests
-      secure: true, // Required for SameSite=None; works only over HTTPS
+      secure: false, // Required for SameSite=None; works only over HTTPS
       maxAge: 15 * 24 * 60 * 60 * 1000, // Cookie expiration time (15 days)
     });
 
