@@ -17,7 +17,14 @@ export const signupUser = async (req, res) => {
     const user = await new userModel({ name, email, password: hashedPassword });
     user.save();
 
-    res.cookie("userToken", token, { httpOnly: false });
+    res.cookie("userToken", token, {
+      httpOnly: true, // Prevent access via JavaScript
+      sameSite: "None", // Allow cross-origin requests
+      secure: true, // Required for SameSite=None; works only over HTTPS
+      maxAge: 15 * 24 * 60 * 60 * 1000, // Cookie expiration time (15 days)
+    });
+    
+    
     res.status(201).json({ message: "User created successfully", user, token });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -44,7 +51,12 @@ export const signInUser = async (req, res) => {
 
     const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "15d" });
 
-    res.cookie("userToken", token, { httpOnly: false, secure: process.env.NODE_ENV === "production", sameSite: "none" });
+    res.cookie("userToken", token, {
+      httpOnly: true, // Prevent access via JavaScript
+      sameSite: "None", // Allow cross-origin requests
+      secure: true, // Required for SameSite=None; works only over HTTPS
+      maxAge: 15 * 24 * 60 * 60 * 1000, // Cookie expiration time (15 days)
+    });
 
     // Send success response with user details and token
     res.status(200).json({
