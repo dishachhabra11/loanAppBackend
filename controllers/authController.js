@@ -17,12 +17,12 @@ export const signupUser = async (req, res) => {
     const user = await new userModel({ name, email, password: hashedPassword });
     user.save();
 
-    res.cookie("userToken", token, {
-      httpOnly: false,
-      sameSite: "None",
-      secure: process.env.NODE_ENV === "production", // Required for SameSite=None; works only over HTTPS
-      maxAge: 15 * 24 * 60 * 60 * 1000, // Cookie expiration time (15 days)
-    });
+   res.cookie("userToken", token, {
+     httpOnly: true, // Prevent JavaScript access for better security
+     sameSite: "None", // Allow cross-origin requests
+     secure: true, // Required for SameSite=None; only works over HTTPS
+     maxAge: 15 * 24 * 60 * 60 * 1000, // Cookie expiration time (15 days)
+   });
     
     
     res.status(201).json({ message: "User created successfully", user, token });
@@ -51,12 +51,12 @@ export const signInUser = async (req, res) => {
 
     const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "15d" });
 
-    res.cookie("userToken", token, {
-      httpOnly: false, // Prevent access via JavaScript
-      sameSite: "None", // Allow cross-origin requests
-      secure: false, // Required for SameSite=None; works only over HTTPS
-      maxAge: 15 * 24 * 60 * 60 * 1000, // Cookie expiration time (15 days)
-    });
+   res.cookie("userToken", token, {
+     httpOnly: true, // Prevent JavaScript access for better security
+     sameSite: "None", // Allow cross-origin requests
+     secure: true, // Required for SameSite=None; only works over HTTPS
+     maxAge: 15 * 24 * 60 * 60 * 1000, // Cookie expiration time (15 days)
+   });
 
     // Send success response with user details and token
     res.status(200).json({
@@ -85,7 +85,12 @@ export const adminSignUp = async (req, res) => {
     const token = jwt.sign({ email, role: "admin" }, process.env.JWT_SECRET, { expiresIn: "15d" });
 
     // Set the token in a cookie
-    res.cookie("adminToken", token, { httpOnly: false, secure: process.env.NODE_ENV === "production", sameSite: "strict" });
+    res.cookie("adminToken", token, {
+      httpOnly: true, // Prevent JavaScript access for better security
+      sameSite: "None", // Allow cross-origin requests
+      secure: true, // Required for SameSite=None; only works over HTTPS
+      maxAge: 15 * 24 * 60 * 60 * 1000, // Cookie expiration time (15 days)
+    });
 
     res.status(201).json({
       message: "Admin created successfully",
@@ -124,7 +129,14 @@ export const adminSignIn = async (req, res) => {
     const token = jwt.sign({ userId: admin._id, role: admin.role }, process.env.JWT_SECRET, { expiresIn: "15d" });
 
     // Set the token in a cookie
-    res.cookie("adminToken", token, { httpOnly: false, secure: process.env.NODE_ENV === "production", sameSite: "strict" });
+    res.cookie("adminToken", token, {
+      httpOnly: true, // Prevent JavaScript access for better security
+      sameSite: "None", // Allow cross-origin requests
+      secure: true, // Required for SameSite=None; only works over HTTPS
+      maxAge: 15 * 24 * 60 * 60 * 1000, // Cookie expiration time (15 days)
+    });
+
+  
 
     res.status(200).json({
       message: "Login successful",
