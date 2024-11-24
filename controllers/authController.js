@@ -18,10 +18,10 @@ export const signupUser = async (req, res) => {
     user.save();
 
    res.cookie("userToken", token, {
-     httpOnly: true, // Prevent JavaScript access for better security
-     sameSite: "None", // Allow cross-origin requests
-     secure: true, // Required for SameSite=None; only works over HTTPS
-     maxAge: 15 * 24 * 60 * 60 * 1000, // Cookie expiration time (15 days)
+     httpOnly: true, // Prevents JavaScript access
+     secure: process.env.NODE_ENV === "production", // Use secure cookies in production (HTTPS)
+     sameSite: "lax", // Helps prevent CSRF
+     maxAge:60* 24 * 60 * 60 * 1000,
    });
     
     
@@ -52,10 +52,10 @@ export const signInUser = async (req, res) => {
     const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "15d" });
 
    res.cookie("userToken", token, {
-     httpOnly: true, // Prevent JavaScript access for better security
-     sameSite: "None", // Allow cross-origin requests
-     secure: true, // Required for SameSite=None; only works over HTTPS
-     maxAge: 15 * 24 * 60 * 60 * 1000, // Cookie expiration time (15 days)
+     httpOnly: true, // Prevents JavaScript access
+     secure: process.env.NODE_ENV === "production", // Use secure cookies in production (HTTPS)
+     sameSite: "lax", // Helps prevent CSRF
+     maxAge:60* 24 * 60 * 60 * 1000,
    });
 
     // Send success response with user details and token
@@ -86,10 +86,10 @@ export const adminSignUp = async (req, res) => {
 
     // Set the token in a cookie
     res.cookie("adminToken", token, {
-      httpOnly: true, // Prevent JavaScript access for better security
-      sameSite: "None", // Allow cross-origin requests
-      secure: true, // Required for SameSite=None; only works over HTTPS
-      maxAge: 15 * 24 * 60 * 60 * 1000, // Cookie expiration time (15 days)
+      httpOnly: true, // Prevents JavaScript access
+      secure: process.env.NODE_ENV === "production", // Use secure cookies in production (HTTPS)
+      sameSite: "lax", // Helps prevent CSRF
+      maxAge: 60*24 * 60 * 60 * 1000,
     });
 
     res.status(201).json({
@@ -130,10 +130,10 @@ export const adminSignIn = async (req, res) => {
 
     // Set the token in a cookie
     res.cookie("adminToken", token, {
-      httpOnly: true, // Prevent JavaScript access for better security
-      sameSite: "None", // Allow cross-origin requests
-      secure: true, // Required for SameSite=None; only works over HTTPS
-      maxAge: 15 * 24 * 60 * 60 * 1000, // Cookie expiration time (15 days)
+      httpOnly: true, // Prevents JavaScript access
+      secure: process.env.NODE_ENV === "production", // Use secure cookies in production (HTTPS)
+      sameSite: "lax", // Helps prevent CSRF
+      maxAge: 60*24 * 60 * 60 * 1000,
     });
 
   
