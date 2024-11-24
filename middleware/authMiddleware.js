@@ -8,7 +8,7 @@ export const adminAuthMiddleware = async (req, res, next) => {
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     if (decoded.role !== "admin") {
-      return res.status(403).json({ error: "Forbidden, Entry denied" });
+      return res.status(403).json({ error: "Forbidden, Entry denied becuase role is not admin" });
     }
     const user = await userModel.findOne({ email: decoded.email });
     console.log("Admin is authenticated");
