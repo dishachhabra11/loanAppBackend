@@ -13,7 +13,7 @@ connectDB();
 
 app.use(
   cors({
-    origin: ["https://loanappfrontend-dishachhabra.onrender.com","http://localhost:5173"],
+    origin: ["http://localhost:5173","https://loanappfrontend-dishachhabra.onrender.com"],
     credentials: true,
   })
 );

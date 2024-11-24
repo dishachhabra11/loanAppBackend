@@ -20,8 +20,8 @@ export const signupUser = async (req, res) => {
    res.cookie("userToken", token, {
      httpOnly: true, // Prevents JavaScript access
      secure: process.env.NODE_ENV === "production", // Use secure cookies in production (HTTPS)
-     sameSite: "lax", // Helps prevent CSRF
-     maxAge:60* 24 * 60 * 60 * 1000,
+     sameSite: "None", // Helps prevent CSRF
+     maxAge: 60 * 24 * 60 * 60 * 1000,
    });
     
     
@@ -54,8 +54,8 @@ export const signInUser = async (req, res) => {
    res.cookie("userToken", token, {
      httpOnly: true, // Prevents JavaScript access
      secure: process.env.NODE_ENV === "production", // Use secure cookies in production (HTTPS)
-     sameSite: "lax", // Helps prevent CSRF
-     maxAge:60* 24 * 60 * 60 * 1000,
+     sameSite: "None", // Helps prevent CSRF
+     maxAge: 60 * 24 * 60 * 60 * 1000,
    });
 
     // Send success response with user details and token
@@ -88,8 +88,8 @@ export const adminSignUp = async (req, res) => {
     res.cookie("adminToken", token, {
       httpOnly: true, // Prevents JavaScript access
       secure: process.env.NODE_ENV === "production", // Use secure cookies in production (HTTPS)
-      sameSite: "lax", // Helps prevent CSRF
-      maxAge: 60*24 * 60 * 60 * 1000,
+      sameSite: "None", // Helps prevent CSRF
+      maxAge: 60 * 24 * 60 * 60 * 1000,
     });
 
     res.status(201).json({
@@ -132,8 +132,8 @@ export const adminSignIn = async (req, res) => {
     res.cookie("adminToken", token, {
       httpOnly: true, // Prevents JavaScript access
       secure: process.env.NODE_ENV === "production", // Use secure cookies in production (HTTPS)
-      sameSite: "lax", // Helps prevent CSRF
-      maxAge: 60*24 * 60 * 60 * 1000,
+      sameSite: "None", // Helps prevent CSRF
+      maxAge: 60 * 24 * 60 * 60 * 1000,
     });
 
   
